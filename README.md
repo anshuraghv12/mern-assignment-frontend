@@ -83,5 +83,21 @@ If you do not immediately notice any issues, try adding a way to
 
 ---
 
+
+## Identified Design Issue
+
+**PATCH API Limitation**:
+The `PATCH /api/subscriptions` endpoint cancels the **first active subscription** it finds in the list. It does not accept an ID to cancel a specific subscription.
+
+**Impact on UI**:
+- A "Cancel" button is provided for each active row to improve UX.
+- However, clicking "Cancel" on a specific item (e.g., the 3rd one) will result in the **1st active item** being cancelled on the server.
+- The UI logic automatically updates to reflect the server's state (the subscription that was *actually* cancelled) rather than the one the user clicked, to ensure data truth.
+
+**Recommendation**:
+Update the backend API to accept an `id` in the `PATCH` request for precise cancellation.
+
+---
+
 ## Optional
 If you had more time, briefly mention what you would improve next and why.
